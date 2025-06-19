@@ -19,7 +19,8 @@
         android:padding="8dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"/>
 
     <!-- Banner -->
     <ImageView
@@ -34,7 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp" />
 
-    <!-- Tiêu đề danh mục -->
+    <!-- Danh mục -->
     <TextView
         android:id="@+id/tvCategory"
         android:layout_width="wrap_content"
@@ -46,7 +47,6 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="16dp" />
 
-    <!-- Danh mục -->
     <LinearLayout
         android:id="@+id/categoryLayout"
         android:layout_width="0dp"
@@ -58,50 +58,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="8dp"
-            android:text="Bàn" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="8dp"
-            android:text="Ghế" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="8dp"
-            android:text="Tủ" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="8dp"
-            android:text="Đèn" />
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:padding="8dp" android:text="Bàn" />
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:padding="8dp" android:text="Ghế" />
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:padding="8dp" android:text="Tủ" />
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:padding="8dp" android:text="Đèn" />
     </LinearLayout>
-
-    <!-- Tiêu đề sản phẩm nổi bật -->
-    <TextView
-        android:id="@+id/tvFeatured"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sản phẩm"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/categoryLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="24dp" />
 
     <!-- Sản phẩm 1 -->
     <LinearLayout
@@ -111,8 +72,11 @@
         android:orientation="horizontal"
         android:background="#f0f0f0"
         android:padding="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/tvFeatured"
+        android:layout_marginTop="24dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:layout_constraintTop_toBottomOf="@id/categoryLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -124,13 +88,15 @@
             app:srcCompat="@drawable/images" />
 
         <TextView
+            android:id="@+id/textViewProduct1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:paddingStart="16dp"
-            android:text="Sản phẩm 1: Mô tả ngắn về sản phẩm."
-            android:textSize="16sp" />
+            android:text="Bàn gỗ"
+            android:textSize="16sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <!-- Sản phẩm 2 -->
@@ -142,6 +108,9 @@
         android:background="#f0f0f0"
         android:padding="8dp"
         android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         app:layout_constraintTop_toBottomOf="@id/product1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -154,13 +123,15 @@
             app:srcCompat="@drawable/images__1_" />
 
         <TextView
+            android:id="@+id/textViewProduct2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:paddingStart="16dp"
-            android:text="Sản phẩm 2: Mô tả ngắn về sản phẩm."
-            android:textSize="16sp" />
+            android:text="Bàn chữ K"
+            android:textSize="16sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <!-- Sản phẩm 3 -->
@@ -172,38 +143,30 @@
         android:background="#f0f0f0"
         android:padding="8dp"
         android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         app:layout_constraintTop_toBottomOf="@id/product2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
-            android:id="@+id/imageView5"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/bg08m_2"
-            android:contentDescription="Sản phẩm 3" />
+            android:contentDescription="Sản phẩm 3"
+            app:srcCompat="@drawable/bg08m_2" />
 
         <TextView
+            android:id="@+id/textViewProduct3"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:paddingStart="16dp"
-            android:text="Sản phẩm 3: Mô tả ngắn về sản phẩm."
-            android:textSize="16sp" />
+            android:text="Bàn bầu dục"
+            android:textSize="16sp"
+            android:textStyle="bold" />
     </LinearLayout>
-
-    <!-- Nút xem tất cả -->
-    <Button
-        android:id="@+id/buttonViewAll"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Xem tất cả sản phẩm"
-        android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@id/product3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
