@@ -9,17 +9,52 @@
     android:padding="16dp"
     tools:context=".HomeActivity">
 
-    <!-- Thanh tìm kiếm -->
-    <SearchView
-        android:id="@+id/searchView"
-        android:layout_width="0dp"
+    <!-- 👋 Chào người dùng -->
+    <TextView
+        android:id="@+id/tvGreeting"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:queryHint="Tìm kiếm sản phẩm..."
-        android:iconifiedByDefault="false"
-        android:padding="8dp"
+        android:text="Hello Quang Hào!"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#3F51B5"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"/>
+
+    <!-- 🔍 Thanh tìm kiếm + giỏ hàng -->
+    <LinearLayout
+        android:id="@+id/searchBarLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/tvGreeting"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:queryHint="Tìm kiếm sản phẩm..."
+            android:iconifiedByDefault="false"
+            android:background="#F5F5F5"
+            android:padding="8dp" />
+
+        <ImageButton
+            android:id="@+id/buttonCart"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Giỏ hàng"
+            android:src="@drawable/ic_shopping_cart"
+            android:tint="#000" />
+    </LinearLayout>
 
     <!-- Banner -->
     <ImageView
@@ -29,12 +64,12 @@
         android:scaleType="centerCrop"
         android:contentDescription="Banner"
         app:srcCompat="@drawable/ban_sao_cua_beige_neutral_modern_fashion_social_media_mockup_facebook_cover_1"
-        app:layout_constraintTop_toBottomOf="@id/searchView"
+        app:layout_constraintTop_toBottomOf="@id/searchBarLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp" />
 
-    <!-- Tiêu đề danh mục -->
+    <!-- Danh mục -->
     <TextView
         android:id="@+id/tvCategory"
         android:layout_width="wrap_content"
@@ -46,7 +81,6 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="16dp" />
 
-    <!-- Danh mục -->
     <LinearLayout
         android:id="@+id/categoryLayout"
         android:layout_width="0dp"
@@ -58,86 +92,89 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="8dp"
-            android:text="Bàn" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="8dp"
-            android:text="Ghế" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="8dp"
-            android:text="Tủ" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:padding="8dp"
-            android:text="Đèn" />
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:padding="8dp" android:text="Bàn" />
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:padding="8dp" android:text="Ghế" />
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:padding="8dp" android:text="Tủ" />
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:padding="8dp" android:text="Đèn" />
     </LinearLayout>
-
-    <!-- Tiêu đề sản phẩm nổi bật -->
-    <TextView
-        android:id="@+id/tvFeatured"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sản phẩm"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/categoryLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="24dp" />
 
     <!-- Sản phẩm 1 -->
     <LinearLayout
         android:id="@+id/product1"
         android:layout_width="0dp"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="#f0f0f0"
         android:padding="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/tvFeatured"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        app:layout_constraintTop_toBottomOf="@id/categoryLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
             android:layout_width="100dp"
-            android:layout_height="match_parent"
+            android:layout_height="100dp"
             android:scaleType="centerCrop"
-            android:contentDescription="Sản phẩm 1"
             app:srcCompat="@drawable/images" />
 
-        <TextView
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:paddingStart="16dp"
-            android:text="Sản phẩm 1: Mô tả ngắn về sản phẩm."
-            android:textSize="16sp" />
+            android:orientation="vertical"
+            android:paddingStart="16dp">
+
+            <TextView
+                android:id="@+id/textViewProduct1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bàn gỗ" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="500.000đ"
+                android:textColor="#FF5722" />
+
+            <LinearLayout android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp">
+                <Button
+                    android:id="@+id/buttonDetail1"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:text="Chi tiết"
+                    android:textSize="12sp"
+                    android:textColor="#FFFFFF"
+                    android:backgroundTint="#2196F3"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:padding="4dp" />
+
+                <Button
+                    android:id="@+id/buttonBuy1"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:text="Mua ngay"
+                    android:textSize="12sp"
+                    android:textColor="#FFFFFF"
+                    android:backgroundTint="#FF5722"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:padding="4dp" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <!-- Sản phẩm 2 -->
     <LinearLayout
         android:id="@+id/product2"
         android:layout_width="0dp"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="#f0f0f0"
         android:padding="8dp"
@@ -148,26 +185,68 @@
 
         <ImageView
             android:layout_width="100dp"
-            android:layout_height="match_parent"
+            android:layout_height="100dp"
             android:scaleType="centerCrop"
-            android:contentDescription="Sản phẩm 2"
             app:srcCompat="@drawable/images__1_" />
 
-        <TextView
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:paddingStart="16dp"
-            android:text="Sản phẩm 2: Mô tả ngắn về sản phẩm."
-            android:textSize="16sp" />
+            android:orientation="vertical"
+            android:paddingStart="16dp">
+
+            <TextView
+                android:id="@+id/textViewProduct2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bàn chữ K" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="650.000đ"
+                android:textColor="#FF5722" />
+
+            <LinearLayout android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp">
+
+                <Button
+                    android:id="@+id/buttonDetail2"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:text="Chi tiết"
+                    android:textSize="12sp"
+                    android:textColor="#FFFFFF"
+                    android:backgroundTint="#2196F3"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:padding="4dp" />
+
+                <Button
+                    android:id="@+id/buttonBuy2"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:text="Mua ngay"
+                    android:textSize="12sp"
+                    android:textColor="#FFFFFF"
+                    android:backgroundTint="#FF5722"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:padding="4dp" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <!-- Sản phẩm 3 -->
     <LinearLayout
         android:id="@+id/product3"
         android:layout_width="0dp"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="#f0f0f0"
         android:padding="8dp"
@@ -177,33 +256,62 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
-            android:id="@+id/imageView5"
             android:layout_width="100dp"
-            android:layout_height="match_parent"
+            android:layout_height="100dp"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/bg08m_2"
-            android:contentDescription="Sản phẩm 3" />
+            app:srcCompat="@drawable/bg08m_2" />
 
-        <TextView
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:paddingStart="16dp"
-            android:text="Sản phẩm 3: Mô tả ngắn về sản phẩm."
-            android:textSize="16sp" />
+            android:orientation="vertical"
+            android:paddingStart="16dp">
+
+            <TextView
+                android:id="@+id/textViewProduct3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bàn bầu dục" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="720.000đ"
+                android:textColor="#FF5722" />
+
+            <LinearLayout android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp">
+
+                <Button
+                    android:id="@+id/buttonDetail3"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:text="Chi tiết"
+                    android:textSize="12sp"
+                    android:textColor="#FFFFFF"
+                    android:backgroundTint="#2196F3"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:padding="4dp" />
+
+                <Button
+                    android:id="@+id/buttonBuy3"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp"
+                    android:layout_weight="1"
+                    android:text="Mua ngay"
+                    android:textSize="12sp"
+                    android:textColor="#FFFFFF"
+                    android:backgroundTint="#FF5722"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:padding="4dp" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
-
-    <!-- Nút xem tất cả -->
-    <Button
-        android:id="@+id/buttonViewAll"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Xem tất cả sản phẩm"
-        android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@id/product3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

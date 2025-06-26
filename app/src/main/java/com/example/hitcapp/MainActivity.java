@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
             String email = ((android.widget.EditText) findViewById(R.id.etEmail)).getText().toString().trim();
             String password = ((android.widget.EditText) findViewById(R.id.etPassword)).getText().toString();
 
-            if(email.equals("hao123") && password.equals("1")) {
+            if(email.equals("hao@gmail.com") && password.equals("1")) {
                 Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                 startActivity(intent);
                 finish();
