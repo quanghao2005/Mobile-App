@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    android:padding="16dp">
+
+  <!-- Nút quay lại -->
+  <ImageButton
+      android:id="@+id/buttonBack"
+      android:layout_width="40dp"
+      android:layout_height="40dp"
+      android:src="@drawable/ic_arrow_back"
+      android:background="?attr/selectableItemBackgroundBorderless"
+      android:contentDescription="Quay lại"
+      android:tint="#212121"
+      android:scaleType="centerInside"
+      android:padding="4dp" />
+
+  <!-- Tiêu đề -->
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Giỏ hàng"
+      android:textSize="22sp"
+      android:textStyle="bold"
+      android:textColor="#212121"
+      android:gravity="center"
+      android:layout_marginBottom="16dp" />
+
+  <!-- Danh sách sản phẩm -->
+  <ListView
+      android:id="@+id/listViewCart"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:divider="@android:color/darker_gray"
+      android:dividerHeight="1dp" />
+
+  <!-- Tổng tiền -->
+  <TextView
+      android:id="@+id/textViewTotal"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Tổng: 0đ"
+      android:textSize="18sp"
+      android:textStyle="bold"
+      android:textColor="#212121"
+      android:gravity="end"
+      android:layout_marginTop="16dp"
+      android:layout_marginBottom="8dp" />
+
+  <!-- Nút thanh toán -->
+  <Button
+      android:id="@+id/buttonCheckout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Thanh toán"
+      android:backgroundTint="#FF5722"
+      android:textColor="#FFFFFF"
+      android:textStyle="bold"
+      android:textSize="16sp" />
+
+  <!-- Nút Xóa Tất Cả -->
+  <ImageButton
+      android:id="@+id/buttonClearAll"
+      android:layout_width="40dp"
+      android:layout_height="40dp"
+      android:layout_gravity="end"
+      android:src="@drawable/ic_delete"
+      android:background="?attr/selectableItemBackgroundBorderless"
+      android:contentDescription="Xóa tất cả"
+      android:tint="#F44336"
+      android:layout_marginTop="8dp"/>
+</LinearLayout>
