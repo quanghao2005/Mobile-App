@@ -14,49 +14,43 @@ public class DetailActivity extends AppCompatActivity {
 
     private ImageView imageViewDetail;
     private TextView textViewTitle, textViewDescription, textViewQuantity, textViewPrice;
-    private Spinner spinnerSize;
     private Button buttonIncrease, buttonDecrease, buttonAddToCart;
     private ImageButton buttonBack, buttonGoToCart;
     private int quantity = 1;
-    private int price = 0; // ✅ Không dùng giá mặc định
+    private int price = 0;
+    private String imageUrl = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
         if (getSupportActionBar() != null) getSupportActionBar().hide();
 
         imageViewDetail = findViewById(R.id.imageViewDetail);
         textViewTitle = findViewById(R.id.textViewTitle);
         textViewDescription = findViewById(R.id.textViewDescription);
         textViewQuantity = findViewById(R.id.textViewQuantity);
-        textViewPrice = findViewById(R.id.textViewPrice); // ✅ TextView hiển thị giá
-        spinnerSize = findViewById(R.id.spinnerSize);
+        textViewPrice = findViewById(R.id.textViewPrice);
         buttonIncrease = findViewById(R.id.buttonIncrease);
         buttonDecrease = findViewById(R.id.buttonDecrease);
         buttonAddToCart = findViewById(R.id.buttonAddToCart);
         buttonBack = findViewById(R.id.buttonBack);
         buttonGoToCart = findViewById(R.id.buttonGoToCart);
 
-        // ✅ Lấy dữ liệu từ Intent
         Intent intent = getIntent();
-        String imageUrl = intent.getStringExtra("imageUrl");
+        imageUrl = intent.getStringExtra("imageUrl");
         String title = intent.getStringExtra("name");
         String description = intent.getStringExtra("description");
-        price = intent.getIntExtra("price", 0); // ✅ Lấy đúng giá
+        price = intent.getIntExtra("price", 0);
 
-        // ✅ Load ảnh bằng Glide
-        Glide.with(this).load(imageUrl).into(imageViewDetail);
+        if (imageUrl != null) {
+            Glide.with(this).load(imageUrl).into(imageViewDetail);
+        }
 
         textViewTitle.setText(title != null ? title : "Không có tên");
         textViewDescription.setText(description != null ? description : "Không có mô tả");
-        textViewPrice.setText("Giá: " + price + "đ"); // ✅ Hiển thị giá
-
-        // Spinner chọn size
-        String[] sizeList = {"Nhỏ", "Vừa", "Lớn"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, sizeList);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerSize.setAdapter(adapter);
+        textViewPrice.setText("Giá: " + price + "đ");
 
         textViewQuantity.setText(String.valueOf(quantity));
 
@@ -79,10 +73,8 @@ public class DetailActivity extends AppCompatActivity {
         });
 
         buttonAddToCart.setOnClickListener(v -> {
-            String selectedSize = spinnerSize.getSelectedItem().toString();
             String name = textViewTitle.getText().toString();
-
-            Product product = new Product(name, selectedSize, price, imageUrl, quantity);
+            Product product = new Product(name, "", price, imageUrl, quantity); // size để rỗng
             saveToCart(product);
             Toast.makeText(this, "Đã thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show();
         });
@@ -95,10 +87,10 @@ public class DetailActivity extends AppCompatActivity {
         try {
             JSONArray array = new JSONArray(json);
             boolean found = false;
+
             for (int i = 0; i < array.length(); i++) {
                 JSONObject obj = array.getJSONObject(i);
-                if (obj.getString("name").equals(newItem.getName()) &&
-                        obj.getString("size").equals(newItem.getSize())) {
+                if (obj.getString("name").equals(newItem.getName())) {
                     int oldQty = obj.getInt("quantity");
                     obj.put("quantity", oldQty + newItem.getQuantity());
                     found = true;

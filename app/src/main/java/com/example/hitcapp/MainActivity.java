@@ -25,7 +25,9 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private RequestQueue mRequestQueue;
-    private String url = "https://fakestoreapi.com/users";
+
+    // ✅ Link API mới
+    private String url = "https://6870c1a77ca4d06b34b7d444.mockapi.io/users";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,21 +66,27 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         JSONArray users = new JSONArray(response);
                         boolean isValid = false;
+                        JSONObject currentUser = null;
 
                         for (int i = 0; i < users.length(); i++) {
                             JSONObject user = users.getJSONObject(i);
                             String userEmail = user.getString("email");
                             String userPassword = user.getString("password");
 
-                            if (userEmail.equals(email) && userPassword.equals(password)) {
+                            if (userEmail.equalsIgnoreCase(email) && userPassword.equals(password)) {
                                 isValid = true;
+                                currentUser = user;
                                 break;
                             }
                         }
 
-                        if (isValid) {
+                        if (isValid && currentUser != null) {
                             Toast.makeText(this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+
+                            // Gửi dữ liệu user qua HomeActivity nếu muốn
                             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                            intent.putExtra("username", currentUser.getString("username"));
+                            intent.putExtra("email", currentUser.getString("email"));
                             startActivity(intent);
                             finish();
                         } else {
