@@ -3,6 +3,7 @@ package com.example.hitcapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +23,9 @@ public class HomeActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ProductAdapter productAdapter;
     ArrayList<Product> productList = new ArrayList<>();
-    ImageButton buttonCart;  // Dùng đúng ID đã khai báo trong XML
+    ArrayList<Product> filteredList = new ArrayList<>();
+    ImageButton buttonCart;
+    SearchView searchView;
 
     String apiUrl = "https://fakestoreapi.com/products";
 
@@ -31,12 +34,12 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        // Ánh xạ view
         recyclerView = findViewById(R.id.recyclerView);
-        buttonCart = findViewById(R.id.buttonCart); // <-- đúng ID trong XML
+        buttonCart = findViewById(R.id.buttonCart);
+        searchView = findViewById(R.id.searchView);
 
-        // Thiết lập RecyclerView
-        productAdapter = new ProductAdapter(this, productList);
+        // Thiết lập adapter ban đầu với filteredList
+        productAdapter = new ProductAdapter(this, filteredList);
         recyclerView.setAdapter(productAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -46,7 +49,20 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Gọi API
+        // Xử lý tìm kiếm
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false; // Không xử lý khi người dùng nhấn tìm
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterProducts(newText);
+                return true;
+            }
+        });
+
         loadProducts();
     }
 
@@ -55,6 +71,7 @@ public class HomeActivity extends AppCompatActivity {
                 response -> {
                     try {
                         productList.clear();
+                        filteredList.clear();
                         for (int i = 0; i < response.length(); i++) {
                             JSONObject obj = response.getJSONObject(i);
                             String name = obj.getString("title");
@@ -63,9 +80,11 @@ public class HomeActivity extends AppCompatActivity {
                             int price = (int) priceDouble;
                             String imageUrl = obj.getString("image");
 
-                            productList.add(new Product(name, description, price, imageUrl));
+                            Product product = new Product(name, description, price, imageUrl);
+                            productList.add(product);
                         }
-                        productAdapter.setProducts(productList);
+                        filteredList.addAll(productList);
+                        productAdapter.setProducts(filteredList);
                     } catch (Exception e) {
                         e.printStackTrace();
                         Toast.makeText(this, "Lỗi xử lý dữ liệu", Toast.LENGTH_SHORT).show();
@@ -75,5 +94,15 @@ public class HomeActivity extends AppCompatActivity {
         );
 
         Volley.newRequestQueue(this).add(request);
+    }
+
+    private void filterProducts(String keyword) {
+        filteredList.clear();
+        for (Product product : productList) {
+            if (product.getName().toLowerCase().contains(keyword.toLowerCase())) {
+                filteredList.add(product);
+            }
+        }
+        productAdapter.setProducts(filteredList);
     }
 }

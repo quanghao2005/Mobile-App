@@ -43,7 +43,13 @@ public class CartActivity extends AppCompatActivity {
 
         buttonBack.setOnClickListener(v -> finish());
 
-        buttonCheckout.setOnClickListener(v -> showCheckoutInfoDialog());
+        buttonCheckout.setOnClickListener(v -> {
+            if (cartItems.isEmpty()) {
+                Toast.makeText(this, "Giỏ hàng đang trống. Vui lòng thêm sản phẩm!", Toast.LENGTH_SHORT).show();
+            } else {
+                showCheckoutInfoDialog();
+            }
+        });
 
         buttonClearAll.setOnClickListener(v -> {
             cartItems.clear();
@@ -101,7 +107,7 @@ public class CartActivity extends AppCompatActivity {
             Product p = getItem(pos);
 
             ImageView imageView = view.findViewById(R.id.imageProduct);
-            Glide.with(CartActivity.this).load(p.getImageUrl()).into(imageView); // Load ảnh từ URL
+            Glide.with(CartActivity.this).load(p.getImageUrl()).into(imageView);
 
             TextView nameText = view.findViewById(R.id.textProductName);
             TextView priceText = view.findViewById(R.id.textProductPrice);
@@ -187,7 +193,7 @@ public class CartActivity extends AppCompatActivity {
 
     private void showQRPaymentDialog(String name, String phone, String address) {
         ImageView qrImage = new ImageView(this);
-        qrImage.setImageResource(R.drawable.qr_code); // Ảnh QR trong drawable
+        qrImage.setImageResource(R.drawable.qr_code);
         qrImage.setPadding(40, 40, 40, 40);
 
         new AlertDialog.Builder(this)

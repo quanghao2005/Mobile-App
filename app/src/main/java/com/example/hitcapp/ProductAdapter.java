@@ -1,5 +1,6 @@
 package com.example.hitcapp;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,43 +69,111 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             context.startActivity(intent);
         });
 
-        // 👉 Mua ngay → thêm vào SharedPreferences (kiểu JSON array)
+        // 👉 Mua ngay
         holder.buttonBuy.setOnClickListener(v -> {
-            SharedPreferences prefs = context.getSharedPreferences("cart", Context.MODE_PRIVATE);
-            String json = prefs.getString("cart_items", "[]");
-
-            try {
-                JSONArray cartArray = new JSONArray(json);
-                boolean found = false;
-
-                for (int i = 0; i < cartArray.length(); i++) {
-                    JSONObject obj = cartArray.getJSONObject(i);
-                    if (obj.getString("name").equals(p.getName())) {
-                        int oldQty = obj.getInt("quantity");
-                        obj.put("quantity", oldQty + 1);
-                        found = true;
-                        break;
-                    }
-                }
-
-                if (!found) {
-                    JSONObject newItem = new JSONObject();
-                    newItem.put("name", p.getName());
-                    newItem.put("imageUrl", p.getImageUrl());
-                    newItem.put("price", p.getPrice());
-                    newItem.put("quantity", 1);
-                    newItem.put("size", ""); // để đồng bộ với DetailActivity
-                    cartArray.put(newItem);
-                }
-
-                prefs.edit().putString("cart_items", cartArray.toString()).apply();
-                Toast.makeText(context, "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-                Toast.makeText(context, "Lỗi thêm sản phẩm", Toast.LENGTH_SHORT).show();
+            if (p == null || p.getName() == null || p.getName().isEmpty()) {
+                Toast.makeText(context, "Sản phẩm không hợp lệ", Toast.LENGTH_SHORT).show();
+                return;
             }
+
+            if (productList == null || productList.isEmpty()) {
+                Toast.makeText(context, "Không có sản phẩm để mua", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            View formView = LayoutInflater.from(context).inflate(R.layout.dialog_checkout_info, null);
+            EditText editName = formView.findViewById(R.id.editName);
+            EditText editPhone = formView.findViewById(R.id.editPhone);
+            EditText editAddress = formView.findViewById(R.id.editAddress);
+            RadioGroup radioGroup = formView.findViewById(R.id.radioGroupPayment);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setView(formView);
+            builder.setTitle("Thông tin đặt hàng");
+            builder.setPositiveButton("Xác nhận", (dialog, which) -> {
+                String name = editName.getText().toString().trim();
+                String phone = editPhone.getText().toString().trim();
+                String address = editAddress.getText().toString().trim();
+                int selectedId = radioGroup.getCheckedRadioButtonId();
+
+                if (name.isEmpty() || phone.isEmpty() || address.isEmpty()) {
+                    Toast.makeText(context, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (selectedId == R.id.radioCash) {
+                    saveToCart(p);
+                    showSuccessDialog();
+                } else if (selectedId == R.id.radioQR) {
+                    saveToCart(p);
+                    showQRDialog();
+                }
+
+            });
+            builder.setNegativeButton("Hủy", null);
+            builder.show();
         });
+    }
+
+    // ✅ Thêm vào giỏ hàng (SharedPreferences)
+    private void saveToCart(Product p) {
+        SharedPreferences prefs = context.getSharedPreferences("cart", Context.MODE_PRIVATE);
+        String json = prefs.getString("cart_items", "[]");
+
+        try {
+            JSONArray cartArray = new JSONArray(json);
+            boolean found = false;
+
+            for (int i = 0; i < cartArray.length(); i++) {
+                JSONObject obj = cartArray.getJSONObject(i);
+                if (obj.getString("name").equals(p.getName())) {
+                    int oldQty = obj.getInt("quantity");
+                    obj.put("quantity", oldQty + 1);
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                JSONObject newItem = new JSONObject();
+                newItem.put("name", p.getName());
+                newItem.put("imageUrl", p.getImageUrl());
+                newItem.put("price", p.getPrice());
+                newItem.put("quantity", 1);
+                newItem.put("size", ""); // để đồng bộ với DetailActivity
+                cartArray.put(newItem);
+            }
+
+            prefs.edit().putString("cart_items", cartArray.toString()).apply();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showQRDialog() {
+        View qrView = LayoutInflater.from(context).inflate(R.layout.dialog_qr_payment, null);
+        Button btnConfirm = qrView.findViewById(R.id.buttonConfirmPayment);
+
+        AlertDialog qrDialog = new AlertDialog.Builder(context)
+                .setView(qrView)
+                .setCancelable(false)
+                .create();
+
+        btnConfirm.setOnClickListener(v -> {
+            qrDialog.dismiss();
+            showSuccessDialog();
+        });
+
+        qrDialog.show();
+    }
+
+    private void showSuccessDialog() {
+        View successView = LayoutInflater.from(context).inflate(R.layout.dialog_checkout_success, null);
+        AlertDialog.Builder successBuilder = new AlertDialog.Builder(context);
+        successBuilder.setView(successView);
+        successBuilder.setCancelable(false);
+        successBuilder.setPositiveButton("OK", null);
+        successBuilder.show();
     }
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {

@@ -4,40 +4,49 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="12dp"
-    android:background="#FFFFFF">
+    android:background="#FFFFFF"
+    android:gravity="center_vertical">
 
+    <!-- Ảnh sản phẩm -->
     <ImageView
         android:id="@+id/imageProduct"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:scaleType="centerCrop"
-        android:contentDescription="Ảnh sản phẩm" />
+        android:contentDescription="Ảnh sản phẩm"
+        android:layout_marginEnd="12dp" />
 
+    <!-- Nội dung bên phải -->
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:paddingStart="12dp"
         android:gravity="center_vertical">
 
+        <!-- Tên sản phẩm -->
         <TextView
             android:id="@+id/textProductName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Tên sản phẩm"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="#212121" />
+            android:textColor="#212121"
+            android:maxLines="2"
+            android:ellipsize="end" />
 
+        <!-- Giá (được set từ code) -->
         <TextView
             android:id="@+id/textProductPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text=""
             android:textSize="14sp"
             android:textColor="#FF5722"
             android:layout_marginTop="4dp" />
 
+        <!-- Tăng giảm số lượng -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -56,8 +65,8 @@
 
             <TextView
                 android:id="@+id/textProductQuantity"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="32dp"
                 android:gravity="center"
                 android:text="1"
                 android:textSize="14sp"
@@ -74,10 +83,12 @@
         </LinearLayout>
     </LinearLayout>
 
+    <!-- Nút xóa -->
     <ImageButton
         android:id="@+id/buttonRemove"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="8dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="Xóa sản phẩm"
         android:src="@drawable/ic_delete"
